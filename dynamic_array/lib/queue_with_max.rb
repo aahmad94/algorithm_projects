@@ -22,6 +22,7 @@ class QueueWithMax
   # time_complexity == O(c)
   def enqueue(val)
     @enqueue_buffer.push(val)
+    # as new items are queued, we identify whether or not they are a max value
     if @enqueue_buffer_max_history.length == 0 ||
       val > @enqueue_buffer_max_history[@enqueue_buffer_max_history.length - 1]
       @enqueue_buffer_max_history.push(val)
@@ -46,7 +47,7 @@ class QueueWithMax
   def max
     in_max = @enqueue_buffer_max_history[@enqueue_buffer_max_history.length - 1]
     out_max = @dequeue_buffer_max_history[@dequeue_buffer_max_history.length - 1]
-    return in_max unless out_max
+    return in_max if in_max && !out_max
     return in_max if in_max && in_max > out_max
     out_max
   end
@@ -70,7 +71,7 @@ class QueueWithMax
         @enqueue_buffer_max_history.pop
       end
 
-      # if the removed item is a max value, add item to dequeue_buffer_max_history
+      # if the removed item is a max value, add item to dequeue_buffer_max_history to keep track of max value
       if @dequeue_buffer_max_history.length == 0 ||
          popped > @dequeue_buffer_max_history[@dequeue_buffer_max_history.length - 1]
         @dequeue_buffer_max_history.push(popped)
