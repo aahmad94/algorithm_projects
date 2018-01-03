@@ -2,6 +2,8 @@ require_relative 'p02_hashing'
 require_relative 'p04_linked_list'
 
 class HashMap
+  include Enumerable
+
   attr_reader :count
 
   def initialize(num_buckets = 8)
@@ -9,17 +11,16 @@ class HashMap
     @count = 0
   end
 
-  include Enumerable
-
   def include?(key)
     bucket(key).include?(key)
   end
 
   def set(key, val)
-    if self.include?(key)
+    resize! if @count >= num_buckets
+
+    if include?(key)
       bucket(key).update(key, val)
     else
-      resize! if @count == num_buckets
       bucket(key).append(key, val)
       @count += 1
     end
@@ -30,26 +31,25 @@ class HashMap
   end
 
   def delete(key)
-    bucket(key).remove(key)
-    @count -= 1
+    removal = bucket(key).remove(key)
+    @count -= 1 if removal
+    removal
   end
 
-  def each(&prc)
+  def each
     @store.each do |bucket|
-      bucket.each do |node|
-        prc.call(node.key, node.val)
-      end
+      bucket.each { |link| yield [link.key, link.val] }
     end
   end
 
-  # uncomment when you have Enumerable included
   def to_s
     pairs = inject([]) do |strs, (k, v)|
-      strs << "#{k.to_s} => #{v.to_s}"
+      strs << "#{k} => #{v}"
     end
     "{\n" + pairs.join(",\n") + "\n}"
   end
 
+  alias_method :inspect, :to_s
   alias_method :[], :get
   alias_method :[]=, :set
 
@@ -60,18 +60,16 @@ class HashMap
   end
 
   def resize!
-    new_num_buckets = num_buckets * 2
-    new_store = Array.new(new_num_buckets) { LinkedList.new }
-    @store.each do |linked_list|
-      linked_list.each do |node|
-        new_store[node.key.hash % new_num_buckets].append(node.key, node.val)
-      end
+    old_store = @store
+    @store = Array.new(num_buckets * 2) { LinkedList.new }
+    @count = 0
+
+    old_store.each do |bucket|
+      bucket.each { |link| set(link.key, link.val) }
     end
-    @store = new_store
   end
 
   def bucket(key)
-    # optional but useful; return the bucket corresponding to `key`
     @store[key.hash % num_buckets]
   end
 end

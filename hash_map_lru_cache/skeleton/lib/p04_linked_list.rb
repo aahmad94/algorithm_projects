@@ -74,15 +74,18 @@ class LinkedList
 
     @tail_dummy.prev = new_node
     new_node.next = @tail_dummy
+
+    new_node
   end
 
   def update(key, val)
     current_node = first
     while current_node != @tail_dummy
       if current_node.key == key
-        return current_node.val = val
+        current_node.val = val
+        return current_node
       end
-      current_node == current_node.next
+      current_node = current_node.next
     end
   end
 
