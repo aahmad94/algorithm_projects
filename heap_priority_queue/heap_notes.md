@@ -1,0 +1,37 @@
+- Priotity Queues 
+    - All items organized according to priority level
+    - Items that belong to the same priority level are grouped together
+    - Want to do better than linear lookup time (array/linked lists)
+
+- Heap (binary)
+    - Heap ~ binary tree
+        - root node
+        - two children for each node 
+        - idea of completeness (top to bottom, left to right)
+            - only has to be working toward a full tree (no gaps)
+        - for each node, it's parent must be less than or equal to it (referring to parent value)
+        - tail node (required for extract) must be known
+            - child position relative to parent node: 2i + 1, 2i + 2
+            - parent position relative to child node: (i - 1)/ 2
+    - #peek
+        - #min/max (O(n), let's us know priority level bounds)
+            - O(c)
+    - #insert 
+        - #push 
+            - #heapify_up must swap with parent until parent <= priority level of parent 
+            - number of swaps ~ depth; O(log(n))
+    - #extract
+        - #pop
+        - swap bottom most and right most node with node you want to remove, then remove bottom most and right most node
+            - No longer fullfil heap requirement; heapify down method instead of heapify.
+            - #heapify_down must swap with child that has lower priority
+            - number of swaps ~ depth; O(log(n))
+    - #heapify 
+        - O(nlog(n))
+    - #heapsort
+        - O(nlog(n))
+        - #heapsort may be done in place
+            - for #heapify, simply create a max-heap intead of heapifying-up for each child
+                - creating a max-heap is easy; we just swap if the parent is less than the child
+            - start from right to left of max-heap, extract, and heapify up; then move down one to the left 
+    
