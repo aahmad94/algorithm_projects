@@ -11,19 +11,20 @@ class BinaryMinHeap
   end
 
   def extract
-    first = @store[0]
-    last = @store[-1]
-    @store[0] = last 
-    @store[-1] = first 
-
-    popped = @store.pop 
+    @store[0], @store[-1] = @store[-1], @store[0]
+    popped = @store.pop
+    BinaryMinHeap.heapify_down(@store, 0, &@prc)
     popped
+
   end
 
   def peek
+    @store.first
   end
 
   def push(val)
+    @store.push(val)
+    BinaryMinHeap.heapify_up(@store, @store.length - 1, &@prc)
   end
 
   public
@@ -41,7 +42,7 @@ class BinaryMinHeap
 
   def self.heapify_down(array, parent_idx, len = array.length, &prc)
     prc ||= Proc.new { |x, y| x <=> y }
-    child_indices = self.child_indices(len, parent_idx)
+    child_indices = BinaryMinHeap.child_indices(len, parent_idx)
 
 
     while (child_indices[0] && prc.call(array[parent_idx], array[child_indices[0]]) == 1) || 
@@ -55,12 +56,24 @@ class BinaryMinHeap
         parent_idx = child_indices[1]
       end
 
-      child_indices = self.child_indices(len, parent_idx)
+      child_indices = BinaryMinHeap.child_indices(len, parent_idx)
     end
 
     array
   end
 
   def self.heapify_up(array, child_idx, len = array.length, &prc)
+    return array if child_idx == 0
+
+    prc ||= Proc.new { |x, y| x <=> y }
+    parent_idx = BinaryMinHeap.parent_index(child_idx)
+
+    while child_idx > 0 && prc.call(array[parent_idx], array[child_idx]) > -1
+      array[parent_idx], array[child_idx] = array[child_idx], array[parent_idx] 
+      child_idx = parent_idx
+      parent_idx = BinaryMinHeap.parent_index(child_idx) if child_idx != 0
+    end
+    
+    array
   end
 end
