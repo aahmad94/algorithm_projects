@@ -33,5 +33,5 @@
         - #heapsort may be done in place
             - for #heapify, simply create a max-heap intead of heapifying-up for each child
                 - creating a max-heap is easy; we just swap if the parent is less than the child
-            - start from right to left of max-heap, extract, and heapify up; then move down one to the left 
+            - start from right to left of max-heap, extract, and heapify up; then move down one to the left
     

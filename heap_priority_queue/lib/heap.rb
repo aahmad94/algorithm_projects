@@ -15,7 +15,6 @@ class BinaryMinHeap
     popped = @store.pop
     BinaryMinHeap.heapify_down(@store, 0, &@prc)
     popped
-
   end
 
   def peek
@@ -48,7 +47,7 @@ class BinaryMinHeap
     while (child_indices[0] && prc.call(array[parent_idx], array[child_indices[0]]) == 1) || 
           (child_indices[1] && prc.call(array[parent_idx], array[child_indices[1]]) == 1)
 
-      if !child_indices[1] || prc.call(array[child_indices[0]], array[child_indices[1]]) == -1
+      if child_indices.length == 1 || prc.call(array[child_indices[0]], array[child_indices[1]]) == -1
         array[parent_idx], array[child_indices[0]] = array[child_indices[0]], array[parent_idx]
         parent_idx = child_indices[0]
       else
