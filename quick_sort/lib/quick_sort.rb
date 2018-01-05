@@ -16,6 +16,17 @@ class QuickSort
 
   # In-place.
   def self.sort2!(array, start = 0, length = array.length, &prc)
+    prc ||= proc { |a, b| a <=> b }
+
+    if length > 1
+      pivot_idx = self.partition(array, start, length, &prc)
+      
+      # because pivot_idx is rand, we have recursive calls made that cover the entire range of the array
+      self.sort2!(array, start, pivot_idx - start, &prc)
+      self.sort2!(array, pivot_idx + 1, length - 1 - pivot_idx, &prc)
+    end 
+    
+    array
   end
 
   def self.partition(array, start, length, &prc)
@@ -26,7 +37,7 @@ class QuickSort
 
     # start + 1 because we onlly deal with the pivot val's position at the end of the partition
     (start + 1..start + length - 1).each do |idx|
-      # if array[idx]val < pivot val, swap items and move barrier (pivot_idx) up one 
+      # if array[idx] val < pivot val, swap items and move barrier (pivot_idx) up one 
       if prc.call(pivot, array[idx]) == 1 
         array[pivot_idx + 1], array[idx] = array[idx], array[pivot_idx + 1]
         pivot_idx += 1
