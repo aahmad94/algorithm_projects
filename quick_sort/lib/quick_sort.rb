@@ -20,8 +20,9 @@ class QuickSort
 
     if length > 1
       pivot_idx = self.partition(array, start, length, &prc)
-      
       # because pivot_idx is rand, we have recursive calls made that cover the entire range of the array
+      p pivot_idx 
+      p start 
       self.sort2!(array, start, pivot_idx - start, &prc)
       self.sort2!(array, pivot_idx + 1, length - 1 - pivot_idx, &prc)
     end 
@@ -35,7 +36,7 @@ class QuickSort
     pivot = array[start]
     pivot_idx = start
 
-    # start + 1 because we onlly deal with the pivot val's position at the end of the partition
+    # start + 1 because we only deal with the pivot val's position at the end of the partition
     (start + 1..start + length - 1).each do |idx|
       # if array[idx] val < pivot val, swap items and move barrier (pivot_idx) up one 
       if prc.call(pivot, array[idx]) == 1 
@@ -49,3 +50,5 @@ class QuickSort
     pivot_idx
   end
 end
+
+p QuickSort.sort2!([44,23,65,62], 0, 3)
