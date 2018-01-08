@@ -1,6 +1,6 @@
 class BSTNode
   attr_reader :value, :left, :right
-  attr_accessor :parent, :tree
+  attr_accessor :parent
 
   def initialize(value)
     @value = value

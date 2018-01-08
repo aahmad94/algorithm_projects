@@ -1,8 +1,6 @@
-
+require 'binary_search_tree'
 def kth_largest(tree_node, k)
-  # both operations, traversal and look up are nlog(n)
-  # 2nlog(n) => nlog(n) time complexity
-  tree = tree_node.tree
+  tree = BinarySearchTree.new()
   kth_largest_value = tree.in_order_traversal(tree_node)[-k]
-  tree.find(kth_largest_value)
+  tree.find(kth_largest_value, tree_node)
 end

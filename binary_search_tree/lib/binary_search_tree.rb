@@ -12,7 +12,7 @@ class BinarySearchTree
   def insert(value)
     unless @root 
       @root= BSTNode.new(value)
-      return @root.tree = self
+      return @root
     end  
 
     current_node = @root
