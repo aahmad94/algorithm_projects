@@ -12,7 +12,7 @@ class BinarySearchTree
   def insert(value)
     unless @root 
       @root= BSTNode.new(value)
-      return @root 
+      return @root.tree = self
     end  
 
     current_node = @root
@@ -105,7 +105,6 @@ class BinarySearchTree
     in_order_traversal(tree_node.left, arr) if tree_node.left
     arr << tree_node.value
     in_order_traversal(tree_node.right, arr) if tree_node.right
-
     arr
   end
 
