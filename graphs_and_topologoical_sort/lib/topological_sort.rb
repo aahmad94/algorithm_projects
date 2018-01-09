@@ -19,10 +19,10 @@ def topological_sort(vertices)
     until current.out_edges.empty?
       edge = current.out_edges.first
       to_vertex = edge.to_vertex
+      edge.destroy!
       if to_vertex.in_edges.empty?
         queue.push(to_vertex)
       end
-      edge.destroy!
     end
   end
 
