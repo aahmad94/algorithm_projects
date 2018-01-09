@@ -22,7 +22,7 @@ class BinarySearchTree
       elsif current_node.right && value > current_node.value 
         current_node = current_node.right
       else 
-        break
+        break 
       end 
     end 
 
@@ -105,7 +105,7 @@ class BinarySearchTree
     in_order_traversal(tree_node.left, arr) if tree_node.left
     arr << tree_node.value
     in_order_traversal(tree_node.right, arr) if tree_node.right
-    arr
+    arr        
   end
 
 
