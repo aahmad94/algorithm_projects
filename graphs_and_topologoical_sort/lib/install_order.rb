@@ -12,6 +12,10 @@ require_relative 'graph'
 require_relative 'topological_sort'
 
 def install_order(arr)
+
+  # hash used to map package_id/dependency id as key with value being the corresponding vertex
+  # NB: only packages that have dependencies will be mapped here... account for those without dependencies on line 35
+
   vertices = Hash.new
   max_id = 1
   arr.each do |tuple|
@@ -20,9 +24,17 @@ def install_order(arr)
     end
     package_id = tuple[0]
     dependency = tuple[1]
+
+    # update max_id; this corresponds to the number of packages we have
+    # create edge from dependency to package_id 
+
     max_id = package_id if max_id < package_id
     Edge.new(vertices[dependency], vertices[package_id])
   end  
+
+  # from range of package_ids, find those without dependencies
+  # use topological sort to first install dependencies then packages
+
   without_dependency = (1..max_id).to_a - vertices.keys
   install_order = topological_sort(vertices.values).map(&:value) + without_dependency 
 end
