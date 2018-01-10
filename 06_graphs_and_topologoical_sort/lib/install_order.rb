@@ -19,8 +19,8 @@ def install_order(arr)
   vertices = Hash.new
   max_id = 1
   arr.each do |tuple|
-    tuple.each do |item|
-      vertices[item] = Vertex.new(item) unless vertices[item]
+    tuple.each do |id|
+      vertices[id] = Vertex.new(id) unless vertices[id]
     end
     package_id = tuple[0]
     dependency = tuple[1]
@@ -37,4 +37,25 @@ def install_order(arr)
 
   without_dependency = (1..max_id).to_a - vertices.keys
   install_order = topological_sort(vertices.values).map(&:value) + without_dependency 
+
+  # # in this version of the problem, 
+  # # all packages will be listed (independent packages have nil value or no entry for their dependencies),
+  # # but package ids are not numbers.
+  # vertices = Hash.new
+  # arr.each do |tuple|
+  #   tuple.each do |id|
+  #     if !vertices[id] && id != nil
+  #       vertices[id] = Vertex.new(id)
+  #     end 
+  #   end
+  #   package_id = tuple[0]
+  #   dependency = tuple[1]
+
+  #   if !dependency.nil?
+  #     Edge.new(vertices[dependency], vertices[package_id]) 
+  #   end 
+  # end  
+
+
+  # install_order = topological_sort(vertices.values).map(&:value)
 end
