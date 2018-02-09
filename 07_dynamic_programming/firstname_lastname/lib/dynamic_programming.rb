@@ -19,7 +19,7 @@ class DynamicProgramming
     # val 
 
     # bottom_up dynamic programming approach
-    blair_map = blair_nums_bottom_up(n)
+    blair_map = blair_nums_bottom_up(n)d
     blair_map[n]
   end
 
