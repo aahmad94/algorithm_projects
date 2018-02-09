@@ -12,3 +12,28 @@
     - Weighted vs Unweighted 
         - Ex. Undirected graph representation of roads of different lengths (length ~ weight/cost)
             - Could be directed graph representation of intracity roads.
+    - Edge or self-edge ~ self-loop
+        - Ex. web crawler
+    - Multi-edge
+        - Ex. multiple flights from city to city/cities.
+    - How many edges?
+        - Directed: 0 <= |E| <= n(n-1)
+        - Un-directed: 0 <= |E| <= n(n-1)/2
+    - Density edges / max edges
+        - Dense adjancy matrix
+        - Sparse adjancy list
+    - Path or walk
+        - Sequence of vertices where each adjacent pair is connected by an edge.
+    - Simple path
+        - A path or walk in which no vertices (and thus no edges) are repeated.
+    - Trail
+        - A walk in which no edges are repeated.
+    - Strongly connected graph
+        - Path from any vertex to any other vertex.
+    - Closed walk
+        - Starts and ends at the same vertex.
+    - Simple cycle
+        - No repitition other than start and end.
+    - Acyclic graph
+        - May have a closed walk in a tree.
+    - Directed acyclic graph
