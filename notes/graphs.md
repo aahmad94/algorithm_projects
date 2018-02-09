@@ -9,3 +9,6 @@
     - Directed vs Undirected
     - Undirected ~ bi-directional
 ![Directed vs. Undirected graphs](/home/adeel/Documents/app_academy/algorithm_projects/notes/images)
+    - Weighted vs Unweighted 
+        - Ex. Undirected graph representation of roads of different lengths (length ~ weight/cost)
+            - Could be directed graph representation of intracity roads.
