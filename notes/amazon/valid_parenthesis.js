@@ -11,6 +11,7 @@ var isValid = function (s) {
 
   for (let i = 0; i < s.length; i++) {
     let chr = s[i];
+    
     if (close.has(chr)) {
       if (stack.pop() !== map[chr]) {
         return false;
@@ -21,6 +22,7 @@ var isValid = function (s) {
         return false;
     }
   }
+
   if (stack.length === 0) {
     return true;
   } else {
