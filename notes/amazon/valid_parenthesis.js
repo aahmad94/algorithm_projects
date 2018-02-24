@@ -6,17 +6,16 @@ var isValid = function (s) {
   const map = { ")": "(", "}": "{", "]": "[" }
 
   for (let i = 0; i < s.length; i++) {
-    let chr = s[i]
+    let chr = s[i];
     if (close.has(chr)) {
       const popped = stack.pop();
       if (popped !== map[chr]) {
         return false;
       }
-    } else {
-      if (!open.has(chr)) {
+    } else if (open.has(chr)) {
+      stack.push(chr);
+      } else {
         return false;
-      }
-      stack.push(chr)
     }
   }
   if (stack.length === 0) {
