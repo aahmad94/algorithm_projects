@@ -16,6 +16,7 @@ var partitionLabels = function (S) {
   const result = [];
   const finalCountsMap = new Object();
   let runningCountsMap = new Object();
+
   const chrs = S.split("");
   chrs.forEach((chr) => {
     if (!finalCountsMap[chr]) {
@@ -24,6 +25,7 @@ var partitionLabels = function (S) {
       finalCountsMap[chr] += 1;
     }
   });
+
   let windowRear = 0;
   for (let i = 0; i < chrs.length; i++) {
     if (!runningCountsMap[chrs[i]]) {
