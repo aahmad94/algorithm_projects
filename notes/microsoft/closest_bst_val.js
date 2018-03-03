@@ -27,3 +27,19 @@ var closestValue = function (root, target) {
 
   return Math.abs(target - result) > Math.abs(target - root.val) ? root.val : result;
 };
+
+// iterative soln
+// var closestValue = function (root, target) {
+//   let curr = root;
+//   let closestVal = root.val;
+//   while (curr != null) {
+//     const currDiff = Math.abs(target - closestVal)
+//     const sampleDiff = Math.abs(target - curr.val);
+//     closestVal = currDiff < sampleDiff ? closestVal : curr.val;
+//     if (closestVal === target) {
+//       return closestVal;
+//     }
+//     curr = curr.val < target ? curr.right : curr.left;
+//   }
+//   return closestVal;
+// };
