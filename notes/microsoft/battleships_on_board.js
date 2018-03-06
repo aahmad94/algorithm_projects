@@ -18,15 +18,34 @@ var countBattleships = function (board) {
   return numShips;
 };
 
+// const shipsDfs = function (r, c, board) {
+//   const rows = board.length;
+//   const cols = board[0].length;
+//   if ((r < 0) || (c < 0) || (r >= rows) || (c >= cols) || (board[r][c] === ".")) {
+//     return;
+//   }
+//   board[r][c] = ".";
+//   shipsDfs(r - 1, c, board);
+//   shipsDfs(r + 1, c, board);
+//   shipsDfs(r, c - 1, board);
+//   shipsDfs(r, c + 1, board);
+// };
+
 const shipsDfs = function (r, c, board) {
   const rows = board.length;
   const cols = board[0].length;
-  if ((r < 0) || (c < 0) || (r >= rows) || (c >= cols) || (board[r][c] === ".")) {
-    return;
-  }
-  board[r][c] = ".";
-  shipsDfs(r - 1, c, board);
-  shipsDfs(r + 1, c, board);
-  shipsDfs(r, c - 1, board);
-  shipsDfs(r, c + 1, board);
-}
+  let stack = [[r, c]];
+  while (stack.length > 0) {
+    const coords = stack.pop();
+    const r = coords[0];
+    const c = coords[1];
+    if ((r < 0) || (c < 0) || (r >= rows) || (c >= cols) || (board[r][c] === ".")) {
+      continue;
+    }
+    board[r][c] = '.';
+    stack.push([r - 1, c]);
+    stack.push([r + 1, c]);
+    stack.push([r, c - 1]);
+    stack.push([r, c + 1]);
+  } 
+};
