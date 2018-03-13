@@ -34,7 +34,7 @@ const buildWords = (num) => {
   }
   for (let i = 0; i < MAGNITUDES.length; i++) {
     if (num < Math.pow(1000, i + 1)) {
-      const remainder = num % Math.pow(1000, i)
+      const remainder = num % Math.pow(1000, i);
       if (remainder > 0) {
         return buildWords(Math.floor(num / Math.pow(1000, i))) + " " + MAGNITUDES[i - 1] + " " + buildWords(remainder);
       } else {
