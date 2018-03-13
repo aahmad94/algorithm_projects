@@ -33,3 +33,5 @@ var lengthOfLongestSubstring = function (s) {
   }
   return ans;
 };
+
+console.log(lengthOfLongestSubstring("qwwkewo"));
