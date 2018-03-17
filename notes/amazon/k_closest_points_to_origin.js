@@ -15,16 +15,7 @@ const kClosestPts = (pts) => {
 
 class MaxHeap {
   constructor() {
-    this.store = [1];
-    this.callback = (el1, el2) => {
-      if (el1 < el2) {
-        return -1;
-      } else if (el1 === el2) {
-        return 0;
-      } else {
-        return 1;
-      }
-    };
+    this.store = [];
   }
 
   count() {
@@ -77,11 +68,42 @@ class MaxHeap {
     const children = [];
     if (leftChildIdx) { children.push([arr[leftChildIdx]]); }
     if (rightChildIdx) { children.push([arr[rightChildIdx]]); }
-    if (children.all(child => this.callback(child) <= 0)) {
+    if (children.every(child => (child <= arr[parentIdx]))) {
       return arr;
     }
+    let swapIdx;
+    if (children.length === 1) {
+      swapIdx = leftChildIdx;
+    } else {
+      swapIdx = children[0] >= children[1] ? rightChildIdx : leftChildIdx;
+    }
+
+    [arr[parentIdx], arr[swapIdx]] = [arr[swapIdx], arr[parentIdx]];
+    return MaxHeap.heapifyDown(arr, swapIdx, len);
   }
 
-// console.log({test});
-// console.log(test.extract());
-console.log(MaxHeap);
+  static heapifyUp(arr, childIdx, len = arr.length) {
+    if (childIdx === 0) { return arr; }
+    let parentIdx = MaxHeap.parentIdx(childIdx);
+    while (childIdx > 0 && arr[parentIdx] < arr[childIdx]) {
+      [arr[parentIdx], arr[childIdx]] = [arr[childIdx], arr[parentIdx]];
+      childIdx = parentIdx;
+      if (childIdx > 0) {
+        parentIdx = MaxHeap.parentIdx(childIdx);
+      }
+    }
+  }
+}
+
+const heap = new MaxHeap();
+heap.add(1);
+heap.add(3);
+console.log({heap});
+heap.extract();
+console.log(heap);
+heap.add(3);
+heap.add(7);
+heap.add(9);
+heap.add(12);
+heap.add(15);
+console.log({heap});
