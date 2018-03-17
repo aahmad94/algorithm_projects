@@ -62,9 +62,26 @@ class MaxHeap {
   static childIndicies(len, parentIdx) {
     return [2 * parentIdx + 1, 2* parentIdx + 2].filter(idx => (idx < len));
   }
-}
 
-const test = new MaxHeap();
+  static parentIdx(childIdx) {
+    if (childIdx === 0) {
+      throw "root has no parent";
+    }
+    return Math.floor(childIdx - 1 / 2);
+  }
+
+  static heapifyDown(arr, parentIdx, len = arr.length) {
+    let leftChildIdx, rightChildIdx;
+    [leftChildIdx, rightChildIdx] = MaxHeap.childIndicies(len, parentIdx);
+    const parentVal = arr[parentIdx];
+    const children = [];
+    if (leftChildIdx) { children.push([arr[leftChildIdx]]); }
+    if (rightChildIdx) { children.push([arr[rightChildIdx]]); }
+    if (children.all(child => this.callback(child) <= 0)) {
+      return arr;
+    }
+  }
+
 // console.log({test});
 // console.log(test.extract());
-console.log(MaxHeap.test());
+console.log(MaxHeap);
