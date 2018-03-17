@@ -1,33 +1,19 @@
-const kClosestPts = (pts) => {
-  let ptsWithDistance = [];
-  pts.forEach(pt => {
-    const x = pt[0];
-    const y = pt[1];
-    const c = Math.pow(Math.pow(x, 2) + Math.pow(y, 2), (1/2));
-    ptsWithDistance.push({ coords: pt, distance: c });
-  });
-  return ptsWithDistance.sort((a, b) => {
-    return a.distance > b.distance;
-  });
-};
-
-// console.log(kClosestPts([[3, 5], [1, 2], [3, 4]]));
-
 class MaxHeap {
   constructor() {
     this.store = [];
   }
 
-  count() {
-    return this.store.length;
+  peek() {
+    if (this.store.length === 0) { throw "no element to peek"; }
+    return this.store[0];
   }
 
   extract() {
-    if (this.count() === 0) {
+    if (this.store.length === 0) {
       throw "no element to extract";
     }
     const val = this.store[0];
-    if (this.count() > 1) {
+    if (this.store.length > 1) {
       this.store[0] = this.store.pop();
       MaxHeap.heapifyDown(this.store, 0);
     } else {
@@ -37,18 +23,12 @@ class MaxHeap {
     return val;
   }
 
-
-  peek() {
-    if (this.count() === 0) {
-      throw "no element to peek";
-    }
-    return this.store[0];
-  }
-
   add(val) {
     this.store.push(val);
-    MaxHeap.heapifyUp(this.store, this.count() - 1);
+    MaxHeap.heapifyUp(this.store, this.store.length - 1);
   }
+
+  // static helper methods
 
   static childIndicies(len, parentIdx) {
     return [2 * parentIdx + 1, 2* parentIdx + 2].filter(idx => (idx < len));
@@ -64,13 +44,12 @@ class MaxHeap {
   static heapifyDown(arr, parentIdx, len = arr.length) {
     let leftChildIdx, rightChildIdx;
     [leftChildIdx, rightChildIdx] = MaxHeap.childIndicies(len, parentIdx);
-    const parentVal = arr[parentIdx];
+
     const children = [];
     if (leftChildIdx) { children.push([arr[leftChildIdx]]); }
     if (rightChildIdx) { children.push([arr[rightChildIdx]]); }
-    if (children.every(child => (child <= arr[parentIdx]))) {
-      return arr;
-    }
+    if (children.every(child => (child <= arr[parentIdx]))) { return arr; }
+
     let swapIdx;
     if (children.length === 1) {
       swapIdx = leftChildIdx;
@@ -88,22 +67,37 @@ class MaxHeap {
     while (childIdx > 0 && arr[parentIdx] < arr[childIdx]) {
       [arr[parentIdx], arr[childIdx]] = [arr[childIdx], arr[parentIdx]];
       childIdx = parentIdx;
-      if (childIdx > 0) {
-        parentIdx = MaxHeap.parentIdx(childIdx);
-      }
+      if (childIdx > 0) { parentIdx = MaxHeap.parentIdx(childIdx); }
     }
   }
 }
 
-const heap = new MaxHeap();
-heap.add(1);
-heap.add(3);
-console.log({heap});
-heap.extract();
-console.log(heap);
-heap.add(3);
-heap.add(7);
-heap.add(9);
-heap.add(12);
-heap.add(15);
-console.log({heap});
+const kClosestPts = (pts, k) => {
+  let ptsWithDistance = [];
+  pts.forEach(pt => {
+    const x = pt[0];
+    const y = pt[1];
+    const c = Math.pow(Math.pow(x, 2) + Math.pow(y, 2), (1 / 2));
+    ptsWithDistance.push({
+      coords: pt,
+      distance: c
+    });
+  });
+
+  // intialize maxHeap with objects in ptsWithDistance array
+  const maxHeap = new MaxHeap();
+  for (let i = 0; i < k; i++) { maxHeap.add(ptsWithDistance[i]); }
+
+  // if obj.distance > maxHeap root val, add obj (heapifyup) 
+  // and extract root (swap with last item in store and heapify down)
+  ptsWithDistance.forEach(obj => {
+    if (obj.distance < maxHeap.peek().distance) {
+      maxHeap.add(obj);
+      maxHeap.extract();
+    }
+  });
+
+  return maxHeap.store;
+};
+
+console.log(kClosestPts([[-2, 4], [0, -2], [-1, 0], [3,5], [-2,-3],[3,2]], 3));
