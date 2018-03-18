@@ -3,17 +3,22 @@ class MaxHeap {
     this.store = [];
   }
 
+  count() {
+    return this.store.length;
+  }
   peek() {
-    if (this.store.length === 0) { throw "no element to peek"; }
+    if (this.count() === 0) { throw "no element to peek"; }
     return this.store[0];
   }
 
+  // extract time complexity ~= O(log(n))
+  // heapify down will make stack depth number (log(n)) of comparisons at most 
   extract() {
-    if (this.store.length === 0) {
+    if (this.count() === 0) {
       throw "no element to extract";
     }
     const val = this.store[0];
-    if (this.store.length > 1) {
+    if (this.count() > 1) {
       this.store[0] = this.store.pop();
       MaxHeap.heapifyDown(this.store, 0);
     } else {
@@ -23,9 +28,11 @@ class MaxHeap {
     return val;
   }
 
+  // add time complexity ~= O(log(n)) 
+  // heapify up will make stack depth number (log(n)) of comparisons at most 
   add(val) {
     this.store.push(val);
-    MaxHeap.heapifyUp(this.store, this.store.length - 1);
+    MaxHeap.heapifyUp(this.store, this.count() - 1);
   }
 
   // static helper methods
@@ -54,7 +61,7 @@ class MaxHeap {
     if (children.length === 1) {
       swapIdx = leftChildIdx;
     } else {
-      swapIdx = children[0] >= children[1] ? rightChildIdx : leftChildIdx;
+      swapIdx = children[0] > children[1] ? leftChildIdx : rightChildIdx;
     }
 
     [arr[parentIdx], arr[swapIdx]] = [arr[swapIdx], arr[parentIdx]];
@@ -72,4 +79,17 @@ class MaxHeap {
   }
 }
 
-module.exports = MaxHeap;
+// heapSort time complexity ~= O(nlog(n))
+Array.prototype.heapSort = function() {
+  const heap = new MaxHeap();
+  while (this.length > 0) {
+    heap.add(this.pop());
+  }
+  while (heap.count() > 0) {
+    this.unshift(heap.extract());
+  }
+  return this;
+};
+
+// module.exports = MaxHeap;
+console.log([5, 9, 8, 2, 4, 1, 3].heapSort());

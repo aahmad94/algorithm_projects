@@ -28,4 +28,4 @@ const kClosestPts = (pts, k) => {
   return maxHeap.store;
 };
 
-console.log(kClosestPts([[-2, 4], [0, -2], [-1, 0], [3,5], [-2,-3],[3,2]], 3));
+console.log(kClosestPts([[-2, 4], [0, -2], [-1, 0], [3,5], [-2,-3],[3,2]], 3));ClosestPts([[-2, 4], [0, -2], [-1, 0], [3,5], [-2,-3],[3,2]], 3));
