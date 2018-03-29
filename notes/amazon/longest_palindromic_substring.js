@@ -1,7 +1,6 @@
 // Time complexity: O(n^3) -- time limit exceeded
 // var longestPalindrome = function (str) {
 //   const subs = genSubs(str);
-//   console.log(subs);
 //   let currPalindrome = "";
 //   subs.forEach(sub => {
 //     if (isValid(sub, currPalindrome)) {
@@ -18,7 +17,7 @@
 //       result.push(str.slice(i, j + 1));
 //     }
 //   }
-//   return result;
+//   return result;frf
 // };
 
 // const isValid = (sub, currPalindrome) => {
@@ -31,7 +30,29 @@
 //   return true;
 // }; 
 
-// Time complexity: O(n * log(n))
+// Time complexity: O(n^2)
+// Soln w/ dynamic programming
 
+const longestPalindrome = (str) => {
+  const size = str.length;
+  const map = [];
+  let maxLength = 0;
+  let result; 
 
-const 
+  for (let i = 0; i < size; i++) {
+    map.push([]);
+  }
+
+  for (let i = size - 1; i >= 0; i--) {
+    for(let j = i; j < size; j++) {
+      const length = j - i + 1;
+      map[i][j] = (str[i] === str[j]) && (length <= 3 || map[i + 1][j - 1]);
+      
+      if (map[i][j] && length >= maxLength) {
+        maxLength = length;
+        result = str.slice(i, j + 1);
+      }
+    }
+  }
+  return result;
+};
