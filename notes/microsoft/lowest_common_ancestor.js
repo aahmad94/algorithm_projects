@@ -7,7 +7,7 @@ var lowestCommonAncestor = function (root, p, q) {
   if (left && right) {
     return root;
   }
-  if (left !== null) {
+  if (left) {
     return left;
   } else {
     return right;

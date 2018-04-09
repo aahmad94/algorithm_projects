@@ -21,4 +21,4 @@ const inOrderTraversal = function (root) {
   }
 
   return left.concat([root.val]).concat(right);
-}
+};

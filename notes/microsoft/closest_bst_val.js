@@ -1,31 +1,43 @@
 var closestValue = function (root, target) {
   let childVal = 0;
 
+  // if root.val is target
   if (root.val === target) {
     return root.val;
   }
 
-  if (root.left === null && root.right === null) {
-    return root.val;
-  }
-  if (target < root.val && root.left === null) {
-    return root.val;
-  }
-  if (target > root.val && root.right === null) {
+  // if root has no children
+  if (!root.left && !root.right) {
     return root.val;
   }
 
+  // if target is smaller than root.val and no left child
+  if (target < root.val && !root.left) {
+    return root.val;
+  }
+
+  // if target is larger than root.val and no right child
+  if (target > root.val && !root.right) {
+    return root.val;
+  }
+
+  // traverse left if target is less than root
   if (target < root.val) {
     childVal = closestValue(root.left, target);
   }
+
+  // traverse right if target is greater than root
   if (target > root.val) {
     childVal = closestValue(root.right, target);
   }
 
+  // need to distinguish which is closer -- root or it's child?
   return Math.abs(target - childVal) >= Math.abs(target - root.val) ? root.val : childVal;
 };
 
-// iterative soln
+// iterative soln 
+// log(n) time
+// constant space (where as recursive approach requires log(n) space requires)
 // var closestValue = function (root, target) {
 //   let curr = root;
 //   let closestVal = root.val;
