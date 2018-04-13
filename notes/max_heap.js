@@ -91,5 +91,5 @@ Array.prototype.heapSort = function() {
   return this;
 };
 
-// module.exports = MaxHeap;
+module.exports = MaxHeap;
 console.log([5, 9, 8, 2, 4, 1, 3].heapSort());
