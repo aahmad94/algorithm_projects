@@ -1,13 +1,15 @@
 var minWindow = function (s, t) {
   if (t.length > s.length) {
-    return false;
+    return "";
   }
 
   let startIdx;
   let endIdx;
 
+  let prevI = 0;
+  let prevJ = 0;
+
   let increment = false;
-  let pointer;
 
   const tChrCts = chrCts(t);
   const tempSubStrChrCts = {};
@@ -20,16 +22,15 @@ var minWindow = function (s, t) {
   }
 
   for (let i = 0, j = 0; i <= s.length;) {
-
     // handle i incrementing
     if (increment) {
-      if (s[i - 1] && tChrCts[s[i - 1]]) {
+      if (s[i - 1] && i > prevI && tChrCts[s[i - 1]]) {
         tempSubStrChrCts[s[i - 1]]--;
       }
 
       // if i meets the pointer, set the increment bool to false
-      if (i === pointer) {
-        pointer = null;
+      if (i > prevI && tChrCts[s[i]]) {
+        prevI = i;
         increment = false;
       }
 
@@ -40,15 +41,14 @@ var minWindow = function (s, t) {
       continue;
     }
 
-    if (tChrCts[s[j]]) {
-      if (!pointer) {
-        pointer = j;
-      }
+    if ((!prevJ || j > prevJ) && tChrCts[s[j]]) {
+      prevJ = j;
       tempSubStrChrCts[s[j]]++;
     }
 
     if (match(tChrCts, tempSubStrChrCts)) {
-      if (!startIdx || j - i <= endIdx - startIdx) {
+      const smallerRange = (j - i) <= (endIdx - startIdx);
+      if (!(startIdx >= 0) || smallerRange) {
         startIdx = i;
         endIdx = j;
       }
@@ -59,10 +59,12 @@ var minWindow = function (s, t) {
 
     if (j < s.length) {
       j++;
+    } else {
+      break;
     }
   }
 
-  if (startIdx) {
+  if (startIdx >= 0) {
     return s.slice(startIdx, endIdx + 1);
   } else {
     return "";
