@@ -14,23 +14,31 @@ var findAnagrams = function (s, p) {
   let comparisonCount = p.length;
 
   // initialize
+  // initialize
   for (let i = 0; i < p.length; i++) {
-    if (pCounts[s[i]] !== undefined && pCounts[s[i]]-- > 0) {
+    if (pCounts[s[i]] !== undefined && pCounts[s[i]] > 0) {
       comparisonCount--;
     }
+
+    if (pCounts[s[i]] !== undefined) {
+      pCounts[s[i]]--;
+    }
   }
-  
+
   for (let i = 0; i < s.length - p.length + 1; i++) {
-    console.log({comparisonCount});
     if (comparisonCount === 0) {
       result.push(i);
-    } 
+    }
 
     // if s[i] exists in pCounts, we decremented it's value prior, either on initialization or below
     // where we look at i + p.length ahead; as such if s[i] exists in pCounts,
     // we increment the pCount and also the comparisonCount if pCounts[s[i]] >= 0 here
-    if (pCounts[s[i]] !== undefined && pCounts[s[i]]++ >= 0) {
+    if (pCounts[s[i]] !== undefined && pCounts[s[i]] >= 0) {
       comparisonCount++;
+    }
+
+    if (pCounts[s[i]] !== undefined) {
+      pCounts[s[i]]++;
     }
 
     // i + p.length corresponds to the position our 'window front'; 
@@ -47,8 +55,12 @@ var findAnagrams = function (s, p) {
     // p = abc
     // s = abcabc
     // abc, bca, cab, abc are all valid anagrams
-    if (pCounts[s[i + p.length]] !== undefined && pCounts[s[i + p.length]]-- > 0) {
+    if (pCounts[s[i + p.length]] !== undefined && pCounts[s[i + p.length]] > 0) {
       comparisonCount--;
+    }
+
+    if (pCounts[s[i + p.length]] !== undefined) {
+      pCounts[s[i + p.length]]--;
     }
   }
   return result;

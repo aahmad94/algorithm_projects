@@ -9,54 +9,66 @@ var minWindow = function (s, t) {
   let prevI = 0;
   let prevJ = 0;
 
-  let increment = false;
+  let incrementI = false;
 
-  const tChrCts = chrCts(t);
-  const tempSubStrChrCts = {};
+  const tCts ={};
 
-  // initialize tempSubStrChrCts w/ tStrChrs and set vals/cts to 0
-  for (let key in tChrCts) {
+  // set up t counter obj
+  t.split("").forEach(chr => {
+    if (tCts[chr]) {
+      tCts[chr]++;
+    } else {
+      tCts[chr] = 1;
+    }
+  });
+
+  const currCts = {};
+
+  // initialize currCts w/ tStrChrs and set vals/cts to 0
+  for (let key in tCts) {
     if (key) {
-      tempSubStrChrCts[key] = 0;
+      currCts[key] = 0;
     }
   }
 
   for (let i = 0, j = 0; i <= s.length;) {
     // handle i incrementing
-    if (increment) {
-      if (s[i - 1] && i > prevI && tChrCts[s[i - 1]]) {
-        tempSubStrChrCts[s[i - 1]]--;
+    if (incrementI) {
+      if (s[i - 1] && i > prevI && tCts[s[i - 1]]) {
+        currCts[s[i - 1]]--;
       }
 
-      // if i meets the pointer, set the increment bool to false
-      if (i > prevI && tChrCts[s[i]]) {
+      // if i meets the next t char, set the incrementI bool to false
+      if (i > prevI && tCts[s[i]]) {
         prevI = i;
-        increment = false;
+        incrementI = false;
       }
 
-      if (increment) {
+      if (incrementI) {
         i++;
       }
 
       continue;
     }
 
-    if ((!prevJ || j > prevJ) && tChrCts[s[j]]) {
+    if ((j === 0 || j > prevJ) && tCts[s[j]]) {
       prevJ = j;
-      tempSubStrChrCts[s[j]]++;
+      currCts[s[j]]++;
     }
 
-    if (match(tChrCts, tempSubStrChrCts)) {
+    if (tCts[s[j]] && validWindow(tCts, currCts)) {
       const smallerRange = (j - i) <= (endIdx - startIdx);
       if (!(startIdx >= 0) || smallerRange) {
         startIdx = i;
         endIdx = j;
       }
 
-      increment = true;
+      // if valid, set incrementI bool to true and don't increment j -- continue
+      incrementI = true;
       continue;
     }
 
+    // increment j
     if (j < s.length) {
       j++;
     } else {
@@ -71,25 +83,15 @@ var minWindow = function (s, t) {
   }
 };
 
-const chrCts = (str) => {
-  const chrCts = {};
-  str.split("").forEach(chr => {
-    if (chrCts[chr]) {
-      chrCts[chr]++;
-    } else {
-      chrCts[chr] = 1;
-    }
-  });
-  return chrCts;
-};
+const validWindow = (tCts, currCts) => {
 
-const match = (tChrCts, tempSubStrChrCts) => {
-
-  for (let key in tChrCts) {
-    if (!tempSubStrChrCts[key] || tempSubStrChrCts[key] < tChrCts[key]) {
+  for (let key in tCts) {
+    if (currCts[key] < tCts[key]) {
       return false;
     }
   }
 
   return true;
 };
+
+// time complexity assuming t.len << s.len ~ O(2n), otherwise O(n^2)
