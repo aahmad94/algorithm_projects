@@ -5,6 +5,8 @@ var minWindow = function (s, t) {
 
   let startIdx;
   let endIdx;
+
+  let increment = false;
   let pointer;
 
   const tChrCts = chrCts(t);
@@ -18,10 +20,31 @@ var minWindow = function (s, t) {
   }
 
   for (let i = 0, j = 0; i <= s.length;) {
-    const chr = s[j];
 
-    if (tChrCts[chr]) {
-      tempSubStrChrCts[chr]++;
+    // handle i incrementing
+    if (increment) {
+      if (s[i - 1] && tChrCts[s[i - 1]]) {
+        tempSubStrChrCts[s[i - 1]]--;
+      }
+
+      // if i meets the pointer, set the increment bool to false
+      if (i === pointer) {
+        pointer = null;
+        increment = false;
+      }
+
+      if (increment) {
+        i++;
+      }
+
+      continue;
+    }
+
+    if (tChrCts[s[j]]) {
+      if (!pointer) {
+        pointer = j;
+      }
+      tempSubStrChrCts[s[j]]++;
     }
 
     if (match(tChrCts, tempSubStrChrCts)) {
@@ -30,29 +53,12 @@ var minWindow = function (s, t) {
         endIdx = j;
       }
 
-      // reset tempSubStrChrCts 
-      for (let key in tChrCts) {
-        if (key) {
-          tempSubStrChrCts[key] = 0;
-        }
-      }
-
-      if (pointer) {
-        i = pointer;
-        pointer = null;
-        j = i;
-        continue;
-      }
-    }
-
-    if (tChrCts[s[j]] && !pointer && s.length - j > t.length) {
-      pointer = j;
+      increment = true;
+      continue;
     }
 
     if (j < s.length) {
       j++;
-    } else {
-      i++;
     }
   }
 
