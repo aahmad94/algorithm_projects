@@ -4,7 +4,7 @@ function Tree(val) {
   this.right = null;
 }
 
-Tree.prototype.hasPathWithSum = function(node, sum) {
+Tree.prototype.nodePathWithSum = function(node, sum) {
   if (!node) {
     return sum === 0 ? true : false;
   } 
@@ -12,14 +12,14 @@ Tree.prototype.hasPathWithSum = function(node, sum) {
   const nextSum = sum - node.value;
   console.log({nextSum});
   if (node && node.left && node.right) {
-    return (this.hasPathWithSum(node.left, nextSum) || 
-    this.hasPathWithSum(node.left, nextSum))
+    return (this.nodePathWithSum(node.left, nextSum) || 
+    this.nodePathWithSum(node.left, nextSum))
   }
 
   if (node && node.left) {
-    return this.hasPathWithSum(node.left, nextSum);
+    return this.nodePathWithSum(node.left, nextSum);
   } else {
-    return this.hasPathWithSum(node.right, nextSum);
+    return this.nodePathWithSum(node.right, nextSum);
   }
 };
 
@@ -33,4 +33,4 @@ tree.left.right = new Tree(17);
 //        13    27
 //       7  17
 
-console.log(tree.hasPathWithSum(tree, 42));
+console.log(tree.nodePathWithSum(tree.left, 20));
