@@ -4,7 +4,7 @@ function Tree(val) {
   this.right = null;
 }
 
-Tree.prototype.nodePathWithSum = function(node, sum) {
+Tree.nodePathWithSum = function(node, sum) {
   if (!node) {
     return sum === 0 ? true : false;
   } 
@@ -33,4 +33,4 @@ tree.left.right = new Tree(17);
 //        13    27
 //       7  17
 
-console.log(tree.nodePathWithSum(tree.left, 20));
+console.log(Tree.nodePathWithSum(tree.left, 20));
