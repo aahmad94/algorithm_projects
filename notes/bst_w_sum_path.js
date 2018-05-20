@@ -2,7 +2,10 @@ function Tree(val) {
   this.value = val;
   this.left = null;
   this.right = null;
+  return this;
 }
+
+// static method defined as property on Tree constructor
 
 Tree.nodePathWithSum = function(node, sum) {
   if (!node) {
@@ -23,7 +26,8 @@ Tree.nodePathWithSum = function(node, sum) {
   }
 };
 
-const tree = new Tree(22);
+const bound = Tree.bind({ "hello": "hello" });
+const tree = new bound(22);
 tree.left = new Tree(13);
 tree.right = new Tree(27);
 tree.left.left = new Tree(7);
