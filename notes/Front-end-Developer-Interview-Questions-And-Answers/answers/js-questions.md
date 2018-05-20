@@ -111,11 +111,89 @@ This is how prototypal inheritance works. The keyword *super* may be used with E
 
 #### What do you think of AMD vs CommonJS?
 
-*Not answered yet*
+Both attempt make sure dependencies are satisfied at the point any block of code is executed.
+
+Most module systems are relatively recent. Before they were available, a particular programming pattern started getting used in more and more JavaScript code: the revealing module pattern.
+
+PROS
+*Simple enough to be implemented anywhere (no libraries, no language support required).
+*Multiple modules can be defined in a single file.
+
+CONS
+*No way to programmatically import modules (except by using eval).
+*Dependencies need to be handled manually.
+*Asynchronous loading of modules is not possible.
+*Circular dependencies can be troublesome.
+*Hard to analyze for static code analyzers.
+
+```javascript
+var myRevealingModule = (function () {
+    var privateVar = "Ben Cherry",
+        publicVar = "Hey there!";
+
+    function privateFunction() {
+        console.log( "Name:" + privateVar );
+    }
+
+    function publicSetName( strName ) {
+        privateVar = strName;
+    }
+
+    function publicGetName() {
+        privateFunction();
+    }
+
+    // Reveal public pointers to
+    // private functions and properties
+    return {
+        setName: publicSetName,
+        greeting: publicVar,
+        getName: publicGetName
+    };
+})();
+
+myRevealingModule.setName( "Paul Kinlan" );
+```
+
+**CommonJS** modules were designed with server development in mind. Naturally, the API is synchronous. In other words, modules are loaded at the moment and in the order they are required inside a source file.
+
+PROS
+*Simple: a developer can grasp the concept without looking at the docs.
+*Dependency management is integrated: modules require other modules and get loaded in the needed order.
+*require can be called anywhere: modules can be loaded programmatically.
+*Circular dependencies are supported.
+
+CONS
+*Synchronous API makes it not suitable for certain uses (client-side).
+One file per module.
+*Browsers require a loader library or transpiling.
+*No constructor function for modules (Node supports this though).
+*Hard to analyze for static code analyzers.
+
+**Asynchronous module definition** defines an application programming interface (API) that defines code modules and their dependencies, and loads them asynchronously if desired. Implementations of AMD provide the following benefits:
+
+Website performance improvements. AMD implementations load smaller JavaScript files (OOP), and then only when they are needed.
+Fewer page errors. AMD implementations allow developers to define dependencies that must load before a module is executed, so the module does not try to use outside code that is not available yet.
+
+PROS
+*Asynchronous loading (better startup times).
+*Circular dependencies are supported.
+*Compatibility for require and exports.
+*Dependency management fully integrated.
+*Modules can be split in multiple files if necessary.
+*Constructor functions are supported.
+*Plugin support (custom loading steps).
+
+CONS
+*Slightly more complex syntactically.
+*Loader libraries are required unless transpiled.
+*Hard to analyze for static code analyzers.
+
+**The main difference between AMD and CommonJS lies in its support for asynchronous module loading. Libraries that do not depend on each other for loading can thus be loaded at the same time. This is particularly important for browsers, where startup times are essential to a good user experience.**
 
 #### Explain why the following doesn't work as an IIFE: `function foo(){ }();`.
 
-*Not answered yet*
+The function itself has to be wrapped in a pair of parenthesis...
 
 ###### What needs to be changed to properly make it an IIFE?
 
@@ -131,7 +209,41 @@ This is how prototypal inheritance works. The keyword *super* may be used with E
 
 #### What is a closure, and how/why would you use one?
 
-*Not answered yet*
+A closure is an inner function that has access to the outer (enclosing) function's variables—scope chain. The closure has three scope chains: it has access to its own scope (variables defined between its curly brackets), it has access to the outer function's variables, and it has access to the global variables.
+
+A closure is a way of keeping access to variables in a function after that function has returned; in a closure, the outer scope variables stick around since there is a reference to the scope after the function returns.
+
+Since closures keep access to the outer scope variables they can be used to save state (creates an interface for interacting with a variable without providing direct access to the variable); things that save state look a whole lot like objects, here's an example where we use a closure to only read/get the name variable (can't set the name variable):
+
+```javascript
+function cat(name) {
+    return {
+        sayName: function() {
+            return name;
+        }
+    }
+}
+
+var fluffy = cat('Mr. Fluffy');
+fluffy.name // returns undefined
+fluffy.sayName() // returns 'Mr. Fluffy'
+
+var whiskers = cat('Whiskers');
+whiskers.sayName() // returns 'Whiskers'
+```
+
+All callback fundtions are also closures -- when we pass a callback function as an argument to another function, the callback is executed at some point inside the containing function’s body just as if the callback were defined in the containing function.
+
+When we use enumerables in a function like map, that map function is a closure that is passed a callback function (has access to variables in the parent scope) which is invoked for each item in an array.
+
+When promises are resolved, a callback must be supplied for the success argument of its *then* method.
+
+We also use callbacks when we create an event listener: 
+
+```javascript
+someElement.addEventListener("mouseup", handleMouseUp, passiveSupported
+                               ? { passive: true } : false);
+```
 
 #### What's a typical use case for anonymous functions?
 
