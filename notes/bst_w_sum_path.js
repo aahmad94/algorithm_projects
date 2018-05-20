@@ -13,7 +13,6 @@ Tree.nodePathWithSum = function(node, sum) {
   } 
 
   const nextSum = sum - node.value;
-  console.log({nextSum});
   if (node && node.left && node.right) {
     return (this.nodePathWithSum(node.left, nextSum) || 
     this.nodePathWithSum(node.left, nextSum))
@@ -26,8 +25,7 @@ Tree.nodePathWithSum = function(node, sum) {
   }
 };
 
-const bound = Tree.bind({ "hello": "hello" });
-const tree = new bound(22);
+const tree = new Tree(22);
 tree.left = new Tree(13);
 tree.right = new Tree(27);
 tree.left.left = new Tree(7);

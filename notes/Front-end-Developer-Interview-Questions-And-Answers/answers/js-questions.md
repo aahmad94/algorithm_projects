@@ -93,7 +93,21 @@ In this case, the inner function's this isn't set so it returns the global/windo
 
 #### Explain how prototypal inheritance works
 
-*Not answered yet*
+By default every function has an empty prototype property to which properties or methods may be added.
+
+When an object is created from a function, it inherits the properties and methods from the function's prototype.
+
+In Js, a constructor function is used to create an object via the kyword new -- the object gets the constructor's properties and methods.
+
+An object has a proto property that points to the function prototype's which contains a pointer to the constructor.
+
+It's redundant for objects to inherit methods from constructor functions because each instance of the object would contain it's own set of methods, we just want each instance to have a unique set of properties.
+
+As such, methods are created on that function's prototype.
+
+The object will look for a property/method from the function's constructor, then the prototype itself, if the property/method is not found in either the object's constructor or prototype, it will look for the property/method through the function's proto to the function's constructor, the parent function and in that parent function's prototype (ultimately the Object.prototype (the keyword *new*, for instance is defined here)).
+
+This is how prototypal inheritance works. The keyword *super* may be used with ES6 classes to adopt an *extended* constructor's properties/methods via *this*. In ES6 *extends* may be used to designate a class' parent.
 
 #### What do you think of AMD vs CommonJS?
 
