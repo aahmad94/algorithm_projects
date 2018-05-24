@@ -38,17 +38,17 @@ var closestValue = function (root, target) {
 // iterative soln 
 // log(n) time
 // constant space (where as recursive approach requires log(n) space requires)
-// var closestValue = function (root, target) {
-//   let curr = root;
-//   let closestVal = root.val;
-//   while (curr != null) {
-//     const currDiff = Math.abs(target - closestVal)
-//     const sampleDiff = Math.abs(target - curr.val);
-//     closestVal = currDiff < sampleDiff ? closestVal : curr.val;
-//     if (closestVal === target) {
-//       return closestVal;
-//     }
-//     curr = curr.val < target ? curr.right : curr.left;
-//   }
-//   return closestVal;
-// };
+var closestValue = function (root, target) {
+  let curr = root;
+  let closestVal = root.val;
+  while (curr != null) {
+    const currDiff = Math.abs(target - closestVal)
+    const sampleDiff = Math.abs(target - curr.val);
+    closestVal = currDiff < sampleDiff ? closestVal : curr.val;
+    if (closestVal === target) {
+      return closestVal;
+    }
+    curr = curr.val < target ? curr.right : curr.left;
+  }
+  return closestVal;
+};
