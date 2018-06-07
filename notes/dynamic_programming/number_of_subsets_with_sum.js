@@ -68,8 +68,8 @@ const dp = (arr, total, i, mem) => {
     toReturn = dp(arr, total, i - 1, mem);
   } else {
     toReturn = (
-      rec(arr, total - arr[i], i - 1) +
-      rec(arr, total, i - 1)
+      rec(arr, total - arr[i], i - 1, mem) +
+      rec(arr, total, i - 1, mem)
     );
   }
   mem[key] = toReturn;
