@@ -23,7 +23,7 @@ function solution(html) {
         if (emailParts.length !== 2) return false;
         if (emailParts[0].length > 64 || emailParts[1].length > 64) return false;
         const emailRegExp = RegExp("^[a-zA-Z0-9.]*$");
-        if (!emailRegExp.test(emailParts[0]) || !emailRegExp.test(emailParts[0])) return false;
+        if (!emailRegExp.test(emailParts[0]) || !emailRegExp.test(emailParts[1])) return false;
     } else {
         // case where company is selected
         const companyName = document.getElementById('company_name').value;

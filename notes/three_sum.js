@@ -12,8 +12,6 @@ var threeSum = function (nums) {
       if (set.has(compliment) && !compliments.has(compliment)) {
         result.push([nums[i], nums[j], compliment]);
       }
-      compliments.add(compliment);
-
     }
   }
   return result;
