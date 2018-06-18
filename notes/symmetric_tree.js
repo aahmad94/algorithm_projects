@@ -51,8 +51,14 @@ const isSymmetric = (root) => {
   return isMirror(root, root);
 };
 
-const isMirror= (node1, node2) => {
+const isMirror = (node1, node2) => {
   if (!node1 && !node2) return true;
   if (!node1 || !node2) return false;
-  return (node1.val === node2.val) && isMirror(node1.right, node2.left) && isMirror(node1.left, node2.right);
+
+  // ensure node1 and node2 values are the same 
+  return (node1.val === node2.val) && 
+    // ensure the right child of node1 has the same val as the left child of node2
+    isMirror(node1.right, node2.left) &&
+    // ensure the left child of node1 has the same val as the right child of node2
+    isMirror(node1.left, node2.right);
 };
