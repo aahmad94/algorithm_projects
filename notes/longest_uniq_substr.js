@@ -1,37 +1,26 @@
-/**
- * @param {string} s
- * @return {number}
- */
-// var lengthOfLongestSubstring = function(s) {
-//     const length = s.length;
-//     const map = new Set();
-//     let ans = 0, i = 0, j = 0;
-//     while (i < length && j < length) {
-//         if (!map.has(s[j])) {
-//             map.add(s[j]);
-//             j++;
-//             ans = Math.max(ans, j - i);
-//         } else {
-//             map.delete(s[i]);
-//             i++;
-//         }
-//     }
-//     return ans;
-// };
+// Examples:
 
-var lengthOfLongestSubstring = function (s) {
-  const length = s.length;
+// Given "abcabcbb", the answer is "abc", which the length is 3.
+
+// Given "bbbbb", the answer is "b", with the length of 1.
+
+// Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke"
+// is a subsequence and not a substring.
+
+const lengthOfLongestSubstring = (s) => {
   const map = new Object();
+
   let ans = 0;
-  for (let i = 0, j = 0; j < length; j++) {
+  for (let i = 0, j = 0; j < s.length; j++) {
     if (map[s[j]]) {
-      // let i become the position of the previous instance of the repeated character if it's greater than i -- we will subtract this value from j (window-front) and add 1 to calculate the length of the next unique substring 
       i = Math.max(map[s[j]], i);
     }
     ans = Math.max(ans, j - i + 1);
     map[s[j]] = j + 1;
   }
+
   return ans;
 };
 
-console.log(lengthOfLongestSubstring("qwwkewo"));
+// abcabcd -> abcd (4)
+console.log(lengthOfLongestSubstring("abcabcd"));
