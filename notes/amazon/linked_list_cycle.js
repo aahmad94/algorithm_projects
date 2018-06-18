@@ -1,4 +1,9 @@
-var hasCycle = function (head) {
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+}
+
+const hasCycle = function (head) {
   const set = new Set();
 
   while (head) {
@@ -13,3 +18,8 @@ var hasCycle = function (head) {
 
   return false;
 };
+
+const head = new ListNode(2);
+head.next = head;
+
+console.log(hasCycle(head));
