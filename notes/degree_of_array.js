@@ -55,18 +55,18 @@ var findShortestSubArray2 = function (nums) {
 const findShortestSubArrayOfNum = (nums, degree, degreeNum) => {
   let shortestLength = nums.length;
   let currCt = 0;
-  for (let i = 0, chr = 0; chr < nums.length;) {
-    if (nums[chr] === degreeNum) {
+  for (let i = 0, j = 0; j < nums.length;) {
+    if (nums[j] === degreeNum) {
       currCt++;
       if (currCt === degree) {
-        shortestLength = Math.min(shortestLength, chr - i + 1);
+        shortestLength = Math.min(shortestLength, j - i + 1);
         while (nums[i] !== degreeNum) {
           i++;
-          shortestLength = Math.min(shortestLength, chr - i + 1);
+          shortestLength = Math.min(shortestLength, j - i + 1);
         }
       }
     }
-    chr++;
+    j++;
   }
   return shortestLength;
 };
