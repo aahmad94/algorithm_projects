@@ -13,8 +13,8 @@
 // const genSubs = (str) => {
 //   const result = [];
 //   for (let i = 0; i < str.length; i++) {
-//     for (let j = i; j < str.length; j++) {
-//       result.push(str.slice(i, j + 1));
+//     for (let chr = i; chr < str.length; chr++) {
+//       result.push(str.slice(i, chr + 1));
 //     }
 //   }
 //   return result;frf
