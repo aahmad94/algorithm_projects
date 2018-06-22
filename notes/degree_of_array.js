@@ -20,3 +20,53 @@ const findShortestSubArray = (arr) => {
   }
   return ans;
 };
+
+
+// initial soln (time complexity: O(n), space complexity O(n))
+// var findShortestSubArray = function (nums) {
+//   const map = {};
+//   let degree;
+//   const degreeNums = new Set();
+//   let shortestLength = nums.length;
+
+//   for (let i = 0; i < nums.length; i++) {
+//     if (map[nums[i]]) {
+//       map[nums[i]]++;
+//     } else {
+//       map[nums[i]] = 1;
+//     }
+//   }
+
+//   degree = Math.max(...(Object.values(map)));
+
+//   for (let i = 0; i < nums.length; i++) {
+//     if (map[nums[i]] === degree) {
+//       degreeNums.add(nums[i]);
+//     }
+//   }
+
+//   for (let degreeNum of degreeNums) {
+//     shortestLength = Math.min(shortestLength, findShortestSubArrayOfNum(nums, degree, degreeNum));
+//   }
+
+//   return shortestLength;
+// };
+
+// const findShortestSubArrayOfNum = (nums, degree, degreeNum) => {
+//   let shortestLength = nums.length;
+//   let currCt = 0;
+//   for (let i = 0, j = 0; j < nums.length;) {
+//     if (nums[j] === degreeNum) {
+//       currCt++;
+//       if (currCt === degree) {
+//         shortestLength = Math.min(shortestLength, j - i + 1);
+//         while (nums[i] !== degreeNum) {
+//           i++;
+//           shortestLength = Math.min(shortestLength, j - i + 1);
+//         }
+//       }
+//     }
+//     j++;
+//   }
+//   return shortestLength;
+// };
