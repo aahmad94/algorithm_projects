@@ -5,8 +5,8 @@ var reverseList = function (head) {
   if (!head.next) {
     return head;
   }
-  let second = head.next;
   let first = head;
+  let second = head.next;
   first.next = null;
   while (second !== null) {
     const third = second.next;
