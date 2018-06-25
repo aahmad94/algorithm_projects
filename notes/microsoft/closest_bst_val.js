@@ -20,6 +20,8 @@ var closestValue = function (root, target) {
   if (target > root.val && !root.right) {
     return root.val;
   }
+  
+  // at this point it has been established that there's both a left and right child
 
   // traverse left if target is less than root
   if (target < root.val) {
