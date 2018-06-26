@@ -14,24 +14,29 @@ const binarySearch = function (nums, target) {
   }
 };
 
+// time: O(log(n))
+// space: O(log(n))
+
 module.exports = binarySearch;
 
-let binarySearchIterative = function (a, key) {
-
-  let low = 0;
-  let high = a.length - 1;
-  while (low <= high) {
-    let mid = low + Math.floor((high - low) / 2);
+const binarySearchIterative = function (a, key) {
+  let min = 0;
+  let max = a.length - 1;
+  while (min <= max) {
+    let mid = min + Math.floor((max - min) / 2);
     if (a[mid] === key) {
       return mid;
     }
 
     if (key < a[mid]) {
-      high = mid - 1;
+      max = mid - 1;
     } else {
-      low = mid + 1;
+      min = mid + 1;
     }
   }
 
   return -1;
 };
+
+// time: O(log(n))
+// space: O(n)
