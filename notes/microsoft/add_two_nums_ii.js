@@ -1,3 +1,6 @@
+// Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
+// Output: 7 - > 8 - > 0 - > 7
+
 const ListNode = function(val) {
   this.val = val;
   this.next = null;
@@ -20,7 +23,7 @@ const addTwoNumbers = function(l1, l2) {
   // populate l3 stack
   while (l1Stack.length > 0 && l2Stack.length > 0) {
     let sum = l1Stack.pop() + l2Stack.pop();
-    l3Stack.push(sum)
+    l3Stack.push(sum);
   }
   while (l1Stack.length > 0) {
     l3Stack.push(l1Stack.pop())
