@@ -17,7 +17,7 @@
 //       result.push(str.slice(i, chr + 1));
 //     }
 //   }
-//   return result;frf
+//   return result;
 // };
 
 // const isValid = (sub, currPalindrome) => {
@@ -34,17 +34,16 @@
 // Soln w/ dynamic programming
 
 const longestPalindrome = (str) => {
-  const size = str.length;
   const map = [];
   let maxLength = 0;
   let result; 
 
-  for (let i = 0; i < size; i++) {
+  for (let i = 0; i < str.length; i++) {
     map.push([]);
   }
 
-  for (let i = size - 1; i >= 0; i--) {
-    for(let j = i; j < size; j++) {
+  for (let i = str.length - 1; i >= 0; i--) {
+    for(let j = i; j < str.length; j++) {
       const length = j - i + 1;
       map[i][j] = (str[i] === str[j]) && (length <= 3 || map[i + 1][j - 1]);
       

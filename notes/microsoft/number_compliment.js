@@ -26,7 +26,7 @@ const generateCompliment = function (str) {
     } else {
       return 0;
     }
-  })
+  });
   return compliment.join("");
 };
 
