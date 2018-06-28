@@ -1,4 +1,4 @@
-let find_max_sum_sub_array = function (arr) {
+let findMaxSumSubArr = function (arr) {
   let globalMax = arr[0];
   let currMax = arr[0];
   let startIdx = 0;
