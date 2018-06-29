@@ -47,7 +47,7 @@ const numWaysIterImproved = (steps, stepSizes = [0, 1]) => {
   return nums[steps];
 };
 
-console.log(numWaysIterImproved(4));
+console.log(numWaysIterImproved(4, [0, 1, 2]));
 console.log(numWaysIterImproved(5));
 console.log(numWaysIterImproved(6));
 console.log(numWaysIterImproved(7));
