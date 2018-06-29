@@ -7,9 +7,11 @@ const Node = function(value) {
 const buildTree = function(preOrder, inOrder) {
 
   // if preOrder only contains the 'rootVal', return a node with the corresponding values
-  if (preOrder.length <= 1) {
+  if (preOrder.length === 1) {
     return new Node(preOrder.shift());
-  }
+  } else if (preOrder.length === 0) {
+    return [];
+  } 
 
   // set root as first element in preOrder traversal
   const rootVal = preOrder.shift();
@@ -44,4 +46,10 @@ const buildTree = function(preOrder, inOrder) {
 //   1   15 7
 //  7
 
-console.log(buildTree([3, 9, 1, 7, 20, 15, 7], [7, 1, 9, 3, 15, 20, 7]));
+// console.log(buildTree([3, 9, 1, 7, 20, 15, 7], [7, 1, 9, 3, 15, 20, 7]));
+
+//     1 
+//       2
+//         3
+
+console.log(buildTree([1, 2, 3], [1, 2 , 3]));
