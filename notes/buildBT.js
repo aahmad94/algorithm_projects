@@ -21,7 +21,7 @@ const buildTree = function(preOrder, inOrder) {
   // then use the partition to create the left and right children's 'inOrder' traversal 
   const inOrderPartitionIdx = inOrder.indexOf(rootVal);
   const inOrderLeft = inOrder.slice(0, inOrderPartitionIdx);
-  const inOrderRight = inOrder.slice(inOrderPartitionIdx +1);
+  const inOrderRight = inOrder.slice(inOrderPartitionIdx + 1);
 
   // the length of 'inOrderLeft' can be used to generate the 'preOrder' for the left and right children
   // exclude the current root from the 'preOrderTraversal' range that will become the left child's 'preOrderTraversal' 

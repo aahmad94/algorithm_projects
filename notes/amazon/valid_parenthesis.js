@@ -18,8 +18,8 @@ var isValid = function (s) {
       }
     } else if (open.has(chr)) {
         stack.push(chr);
-      } else {
-        return false;
+    } else {
+      return false;
     }
   }
 
