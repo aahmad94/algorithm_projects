@@ -16,28 +16,28 @@ class Edge {
     this.toVertex.inEdges.push(this);
   }
 
-  destroy() {
-    let fromVertexEdgeIdx;
-    let toVertexEdgeIdx;
-    this.fromVertex.outEdges.forEach((edge, idx) => {
-      if (edge === this) {
-        fromVertexEdgeIdx = idx;
-      }
-    });
-    this.toVertex.inEdges.forEach((edge, idx) => {
-      if (edge === this) {
-        this.toVertexEdgeIdx = idx;
-      }
-    });
-    this.fromVertex.outEdges = this.fromVertex.outEdges
-                                  .slice(0, fromVertexEdgeIdx)
-                                  .concat(this.fromVertex.outEdges.slice(fromVertexEdgeIdx + 1));
-    this.toVertex.inEdges = this.toVertex.inEdges
-                                .slice(0, toVertexEdgeIdx)
-                                .concat(this.toVertex.inEdges.slice(toVertexEdgeIdx + 1));
-    this.fromVertex = null;
-    this.toVertex = null;
-  }
+  // destroy() {
+  //   let fromVertexEdgeIdx;
+  //   let toVertexEdgeIdx;
+  //   this.fromVertex.outEdges.forEach((edge, idx) => {
+  //     if (edge === this) {
+  //       fromVertexEdgeIdx = idx;
+  //     }
+  //   });
+  //   this.toVertex.inEdges.forEach((edge, idx) => {
+  //     if (edge === this) {
+  //       this.toVertexEdgeIdx = idx;
+  //     }
+  //   });
+  //   this.fromVertex.outEdges = this.fromVertex.outEdges
+  //                                 .slice(0, fromVertexEdgeIdx)
+  //                                 .concat(this.fromVertex.outEdges.slice(fromVertexEdgeIdx + 1));
+  //   this.toVertex.inEdges = this.toVertex.inEdges
+  //                               .slice(0, toVertexEdgeIdx)
+  //                               .concat(this.toVertex.inEdges.slice(toVertexEdgeIdx + 1));
+  //   this.fromVertex = null;
+  //   this.toVertex = null;
+  // }
 
 }
 
@@ -56,8 +56,8 @@ class Graph {
     }
     for (let i = 0; i < this.towers.length; i++) {
       const tower = this.towers[i];
-      for (let j = i + 1; j <= i + tower && j <= this.towers.length; j++) {
-        if (j === this.towers.length) {
+      for (let j = i + 1; j <= i + tower; j++) {
+        if (j >= this.towers.length) {
           new Edge(this.map[i], new Vertex(null));
         } else {
           new Edge(this.map[i], this.map[j]);
@@ -66,17 +66,20 @@ class Graph {
     }
   }
 
+  // dfs to see if we ever hit a null root, 
+  // null root indicates we're able to hop the towers
   static isHoppable(root) {
     const { outEdges } = root; 
     if (root.val === null) return true;
     if (outEdges.length === 0) return false;
-    let bool;
     for(let i = 0; i < outEdges.length; i++) {
       const edge = outEdges[i];
       const { toVertex } = edge;
-      bool = Graph.isHoppable(toVertex);
+      if (Graph.isHoppable(toVertex) === true) {
+        return true;
+      }
     }
-    return bool;
+    return false;
   }
 }
 
