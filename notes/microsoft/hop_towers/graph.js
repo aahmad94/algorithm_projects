@@ -47,7 +47,6 @@ class Graph {
     this.map = { 0: new Vertex(towers[0]) };
     this.root = this.map[0];
     this.constructTowers();
-    return this.root;
   }
 
   constructTowers() {
@@ -67,10 +66,28 @@ class Graph {
     }
   }
 
-  isHoppable() {
-
+  static isHoppable(root) {
+    const { outEdges } = root; 
+    if (root.val === null) return true;
+    if (outEdges.length === 0) return false;
+    let bool;
+    for(let i = 0; i < outEdges.length; i++) {
+      const edge = outEdges[i];
+      const { toVertex } = edge;
+      bool = Graph.isHoppable(toVertex);
+    }
+    return bool;
   }
 }
 
-const towersGraph = new Graph ([4, 2, 0, 0, 2, 0]);
-console.log(util.inspect(towersGraph, { depth: null }));
+let towersGraph = new Graph ([4, 2, 0, 0, 2, 0]);
+// console.log(util.inspect(towersGraph.root, { depth: null }));
+console.log({ isHoppable: Graph.isHoppable(towersGraph.root) }, "should be true");
+
+towersGraph = new Graph ([4, 2, 0, 0, 1, 0]);
+// console.log(util.inspect(towersGraph.root, { depth: null }));
+console.log({ isHoppable: Graph.isHoppable(towersGraph.root) }, "should be false");
+
+towersGraph = new Graph ([1, 3, 0, 0, 2, 0]);
+// console.log(util.inspect(towersGraph.root, { depth: null }));
+console.log({ isHoppable: Graph.isHoppable(towersGraph.root) }, "should be true");
