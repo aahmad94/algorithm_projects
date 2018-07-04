@@ -9,8 +9,10 @@ var groupAnagrams = function (words) {
       anagramsMap[sortedWord].push(word);
     } else {
       // else set the initial key to be the sorted word
-      anagramsMap[sortedWord] = [sortedWord];
+      anagramsMap[sortedWord] = [word];
     }
   });
   return Object.values(anagramsMap);
 };
+
+const arr = ["tea", "ate", "eat", "dog", "god"];
