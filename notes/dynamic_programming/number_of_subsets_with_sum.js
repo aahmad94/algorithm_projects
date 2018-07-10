@@ -63,7 +63,7 @@ const dp = (arr, total, i, mem) => {
   if (total === 0) return 1;
   if (total < 0) return 0;
   if (i < 0) return 0;
-  // wiith dp we only call the below conditional n times
+  // with dp we only call the below conditional n times
   if (arr[i] > total) {
     toReturn = dp(arr, total, i - 1, mem);
   } else {
