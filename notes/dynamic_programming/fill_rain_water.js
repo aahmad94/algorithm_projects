@@ -48,3 +48,27 @@ var _trap = function (height) {
 
 // time: O(n)
 // space: O(n)
+
+// improved dp soln
+var __trap = function (height) {
+  let len = height.length;
+  let a = 0,
+    b = len - 1;
+  let leftMax = height[a],
+    rightMax = height[b];
+  let output = 0;
+
+  while (a < b) {
+    if (leftMax < rightMax) {
+      output += (leftMax - height[a]);
+      a += 1;
+      leftMax = Math.max(leftMax, height[a]);
+    } else {
+      output += (rightMax - height[b]);
+      b -= 1;
+      rightMax = Math.max(rightMax, height[b]);
+    }
+  }
+  return output;
+
+};
