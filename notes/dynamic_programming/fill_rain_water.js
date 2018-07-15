@@ -18,3 +18,33 @@ var trap = function (height) {
 // space: O(c)
 
 // dp soln
+var _trap = function (height) {
+  let total = 0;
+
+  // dp
+  const maxLeftHeights = {};
+  const maxRightHeights = {};
+
+  // init dp
+  maxLeftHeights[0] = height[0];
+  maxRightHeights[height.length - 1] = height[height.length - 1];
+
+  // fill dp
+  for (let i = 1; i < height.length; i++) {
+    maxLeftHeights[i] = Math.max(height[i], maxLeftHeights[i - 1]);
+  }
+
+  // fill dp
+  for (let i = height.length - 2; i >= 0; i--) {
+    maxRightHeights[i] = Math.max(height[i], maxRightHeights[i + 1]);
+  }
+
+  // refer to dp store to calc volume
+  for (let i = 0; i < height.length; i++) {
+    total += Math.min(maxLeftHeights[i], maxRightHeights[i]) - height[i];
+  }
+  return total;
+};
+
+// time: O(n)
+// space: O(n)
