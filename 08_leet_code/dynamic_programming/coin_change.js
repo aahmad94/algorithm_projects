@@ -13,9 +13,58 @@ const coinChangeRec1 = (idx, coins, amt) => {
     console.log({i});
     const res = coinChangeRec1(idx + 1, coins, amt - i * coins[idx]);
     if (res >= 0) {
-      minCoins = Math.min(minCoins, res + x);
+      minCoins = Math.min(minCoins, res + i);
     } 
   }
 
   return minCoins === Number.MAX_VALUE ? -1 : minCoins;
 };
+
+// time complexity: O(S^n)
+
+// dp top-down soln
+const coinChange2 = (coins, amt) => {
+ if (amt < 1) return 0;
+ return coinChangeDP(coins, amt, [amt]);
+};
+
+const coinChangeDP = (coins, rem, count) => {
+  if (rem < 0) return -1;
+  if (rem === 0) return 0;
+  if (count[rem - 1] && rem - 1 !== 0 && count[rem - 1] !== 0) return count[rem - 1];
+  let min = Number.MAX_VALUE;
+  for (let i = 0; i < coins.length; i++) {
+    const coin = coins[i];
+    const res = coinChangeDP(coins, rem - coin, count);
+    if (res >= 0 && res < min) {
+      min = res + 1;
+    }
+  }
+  count[rem - 1] = min === Number.MAX_VALUE ? -1 : min;
+  return count[rem - 1];
+};
+
+// time complexity O(S * n)
+// space complexity O(S)
+// dp bottom-up soln
+
+const coinChange3 = (coins, amt) => {
+  let max = amt + 1;
+  const dp = new Array(max);
+  dp.fill(max);
+  dp[0] = 0;
+
+  for (let i = 1; i <= amt; i++) {
+    for (let j = 0; j < coins.length; j++) {
+      if (coins[j] <= i) {
+        dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+        // console.log(`${i}, ${coins[j]}: ${dp}`);
+      }
+    }
+  }
+
+  return dp[amt] > amt ? -1 : dp[amt];
+};
+// time complexity O(S * n)
+// space complexity O(S)
+
