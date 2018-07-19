@@ -11,7 +11,6 @@ const rec = (arr, ans, idx) => {
 
   rec(arr.slice(0, idx).concat(arr.slice(idx + 1)), ans, idx - 1);
   rec(arr, ans, idx - 1);
-
 };
 
 console.log(subsets([1,2,3]));
