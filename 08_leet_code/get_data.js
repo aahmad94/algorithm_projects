@@ -26,19 +26,27 @@ const https = require('https');
 // // movieData();
 
 function getTopicCount(topic) {
+  // const https = require('https');
   const params = {
     count: 0
   };
-  const urlStr = `https://en.wikipedia.org/wiki/${topic}`
-  https.get(urlStr, resp => {
-    resp.on('data', data => {
-      updateCtCB(data, params);
+  const urlStr = `https://en.wikipedia.org/w/api.php?action=parse&section=0&prop=text&format=json&page=${topic}`;
+  https.get(urlStr, res => {
+    res.on('data', data => {
+      let strData = data.toString();
+      updateCts(strData, params, topic);
     });
+    res.on('end', () => (console.log(params.count)));
+  }).on('error', (error) => {
+    console.error(0);
   });
 }
 
-const updateCtCB = (data, params) => {
-  console.log(data);
+const updateCts = (strData, params, topic) => {
+  const regExp = new RegExp(topic, "g");
+  const count = (strData.match(regExp) || []).length;
+  params.count += count;
+  // process.stdout.write(strData);
 };
 
-console.log(getTopicCount("pizza"));
+console.log(getTopicCount("france"));
