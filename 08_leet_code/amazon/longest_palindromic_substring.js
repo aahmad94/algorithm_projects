@@ -37,7 +37,7 @@ const longestPalindrome = (str) => {
   const map = [];
   let maxLength = 0;
   let result; 
-
+  let count = 0;
   for (let i = 0; i < str.length; i++) {
     map.push([]);
   }
@@ -46,12 +46,14 @@ const longestPalindrome = (str) => {
     for(let j = i; j < str.length; j++) {
       const length = j - i + 1;
       map[i][j] = (str[i] === str[j]) && (length <= 3 || map[i + 1][j - 1]);
-      
+      // if (map[i][j]) count++;
       if (map[i][j] && length >= maxLength) {
         maxLength = length;
         result = str.slice(i, j + 1);
       }
     }
   }
-  return result;
+  return maxLength;
 };
+
+console.log(longestPalindrome("abccba"));
