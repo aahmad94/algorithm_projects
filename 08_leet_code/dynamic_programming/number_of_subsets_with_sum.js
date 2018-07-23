@@ -75,3 +75,5 @@ const dp = (arr, total, i, mem) => {
   mem[key] = toReturn;
   return toReturn;
 };
+
+console.log(countSets([4, 1, 10, 12, 5, 2], 9));
