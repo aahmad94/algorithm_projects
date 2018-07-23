@@ -10,7 +10,6 @@ const coinChangeRec1 = (idx, coins, amt) => {
   const x = Math.floor(amt / coins[idx]);
 
   for (let i = x; i >= 0; i--) {
-    console.log({i});
     const res = coinChangeRec1(idx + 1, coins, amt - i * coins[idx]);
     if (res >= 0) {
       minCoins = Math.min(minCoins, res + i);
@@ -58,13 +57,14 @@ const coinChange3 = (coins, amt) => {
     for (let j = 0; j < coins.length; j++) {
       if (coins[j] <= i) {
         dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
-        // console.log(`${i}, ${coins[j]}: ${dp}`);
       }
     }
   }
 
   return dp[amt] > amt ? -1 : dp[amt];
 };
+
+console.log(coinChange3([1, 2], 4));
 // time complexity O(S * n)
 // space complexity O(S)
 

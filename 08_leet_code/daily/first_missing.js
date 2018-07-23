@@ -28,4 +28,5 @@ const firstMissing =  (nums) => {
 };
 
 // console.log(firstMissing([1, 2, 0])); // => 3
-console.log(firstMissing([3, 4, -1, 1])); // => 2
+// console.log(firstMissing([3, 4, -1, 1])); // => 2
+console.log(firstMissing([1, 2, 4]));
