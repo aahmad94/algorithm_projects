@@ -1,0 +1,55 @@
+const longestCommonSubstring = (str1, str2) => {
+  return rec(str1, str2, str1.length, str2.length);
+};
+
+const rec = (str1, str2, n, m) => {
+  if (n === 0 || m === 0) return 0;
+  if (str1[n - 1] === str2[m - 1]) {
+    return rec(str1, str2, n - 1, m - 1) + 1;
+  } else {
+    return Math.max(
+      rec(str1, str2, n - 1, m),
+      rec(str1, str2, n, m - 1)
+    );
+  }
+};
+
+const a = "aaaaaaaaaa";
+const b = "bbbbbbbbbb";
+
+// console.log(longestCommonSubstring(a, b));
+
+// time complexity above for top down soln = 2^(n + m)
+// memoize
+
+const longestCommonSubstringDp = (str1, str2) => {
+  const n = str1.length; 
+  const m = str2.length;
+  const memo = new Array(n);
+  for (let i = 0; i < n; i++) {
+    memo[i] = new Array(m);
+    memo[i].fill(0);
+  }
+  memo[0][0] = 0;
+  return dp(str1, str2, n, m, memo);
+};
+
+const dp = (str1, str2, n, m, memo) => {
+  if (n === 0 || m === 0) return 0;
+  if (memo[n - 1][m - 1]) {
+    return memo[n - 1][m - 1];
+  }
+
+  if (str1[n - 1] === str2[m - 1]) {
+    memo[n - 1][m - 1] = dp(str1, str2, n - 1, m - 1, memo);
+  } else {
+    memo[n - 1][m - 1] = Math.max(
+      dp(str1, str2, n, m - 1, memo),
+      dp(str1, str2, n - 1, m, memo)
+    );
+  }
+  return memo[n - 1][m - 1];
+};
+
+// time complexity = 2 * n * m = O(n * m)
+console.log(longestCommonSubstringDp(a, b));
