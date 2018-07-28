@@ -42,4 +42,4 @@ const helperDp = (str, k, memo) => {
 };
 
 // console.log(numWaysDp("12"));
-console.log(numWaysDp("123"));
+console.log(numWaysDp("111"));
