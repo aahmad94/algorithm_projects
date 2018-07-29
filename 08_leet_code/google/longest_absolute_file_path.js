@@ -4,7 +4,7 @@ var lengthLongestPath = function (input) {
   }
   //this array will be a index based tracker for the length at each
   //level of our directory
-  let tracker = []
+  let tracker = [];
   let ans = 0;
   for (let path of input.split("\n")) {
     let level = path.lastIndexOf("\t") + 1;
