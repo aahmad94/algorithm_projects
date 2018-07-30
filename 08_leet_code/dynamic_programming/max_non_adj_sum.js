@@ -5,6 +5,7 @@ const maxNonAdjSum = (nums) => {
   for (let i = 0; i < dp.length; i++) {
     let first = 0;
     let second = 0;
+    
     if (dp[i - 2]) {
       first = Math.max(dp[i], dp[i] + dp[i - 2], dp[i-2]);
     }
