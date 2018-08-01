@@ -3,7 +3,7 @@ public class Solution {
     numWays(5, new int[] {1, 2});
   }
 
-  public static int numWays(int numSteps, int[] stepSizes) {
+  private static int numWays(int numSteps, int[] stepSizes) {
     int[] dp = new int[numSteps + 1];
     dp[0] = 1;
 
