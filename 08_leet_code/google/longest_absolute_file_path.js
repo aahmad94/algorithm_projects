@@ -9,7 +9,7 @@ const lengthLongestPath = (input) => {
     const level = path.lastIndexOf("\t");
     tracker[level] = path.length - level + (level > -1 ? tracker[level - 1] : -1);
     if (path.indexOf(".") >= 0) {
-      ans = Math.max(ans, tracker[level])
+      ans = Math.max(ans, tracker[level]);
     }
   }
   return ans;
