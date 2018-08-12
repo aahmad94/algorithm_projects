@@ -1,4 +1,4 @@
-const isUniValTree = (node, rootVal = null) => {
+const isUnival = (node, rootVal = null) => {
   if (!node) return true;
   let bool = true;
 
@@ -6,10 +6,10 @@ const isUniValTree = (node, rootVal = null) => {
     bool = false;
   }
 
-  return bool && isUniValTree(node.left, node.val) || isUniValTree(node.right, node.val);
+  return bool && isUnival(node.left, node.val) || isUnival(node.right, node.val);
 };
 
-const countUnivalTree = (root) => {
+const countUnival = (root) => {
   const map = {};
   const props = {
     count: 0
@@ -21,12 +21,13 @@ const countUnivalTree = (root) => {
 const rec = (root, map, props) => {
   if (!root) return;
 
-  rec(root.left, map);
-  rec(root.right, map);
+  rec(root.left, map, props);
+  rec(root.right, map, props);
 
   if (typeof(map[root]) === 'boolean' && map[root]) {
       props.count++;
   } else {
-    map[root] = isUniValTree(root, map, props);
+    map[root] = isUnival(root);
+    if (map[root]) props.count++; 
   }
 };
