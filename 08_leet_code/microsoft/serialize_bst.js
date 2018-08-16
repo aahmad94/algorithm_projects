@@ -1,7 +1,7 @@
 const TreeNode = function(val) {
   this.left = null;
   this.right = null;
-}
+};
 
 var serialize = function (root) {
   const preStore = [];
@@ -56,4 +56,4 @@ const buildBST = (preStore, inStore) => {
   root.right = buildBST(preStoreRight, inStoreRight);
 
   return root;
-}
+};

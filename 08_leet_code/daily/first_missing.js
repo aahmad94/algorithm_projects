@@ -6,17 +6,19 @@ const firstMissing =  (nums) => {
   let max1;
   let max2;
 
+  // scan and set min and max
   for (let i = 0; i < nums.length; i++) {
     if (nums[i] >= 0 && nums[i] < min) min = nums[i];
     if (nums[i] >= 0 && nums[i] > max) max = nums[i];
   }
 
+  // the possible missing number could me min - 1, min + 1, max - 1, or max + 1
   min1 = min - 1 <= 0 ? Number.MAX_VALUE : min - 1;
   min2 = min + 1;
   max1 = max - 1 <= 0 ? Number.MAX_VALUE : max - 1;
   max2 = max + 1;
 
-
+  // second scan to prune possible answers from 4 to 1
   for (let i = 0; i < nums.length; i++) {
     if (nums[i] === min1) min1 = Number.MAX_VALUE;
     if (nums[i] === min2) min2 = Number.MAX_VALUE;
@@ -29,4 +31,4 @@ const firstMissing =  (nums) => {
 
 // console.log(firstMissing([1, 2, 0])); // => 3
 // console.log(firstMissing([3, 4, -1, 1])); // => 2
-console.log(firstMissing([1, 2, 4]));
+console.log(firstMissing([1, 2, 4])); // => 3
