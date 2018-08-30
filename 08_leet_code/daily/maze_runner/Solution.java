@@ -35,29 +35,21 @@ class Solution {
     
     maze[x][y] = true;
     
-    int left = rec(maze, x, y - 1, end);
-    int right = rec(maze, x, y + 1, end);
     int up = rec(maze, x - 1, y, end);
+    int right = rec(maze, x, y + 1, end);
+    int left = rec(maze, x, y - 1, end);
     int down = rec(maze, x + 1, y, end);
     
-    if (left > 0) {
-      steps += left;
-    }
+    int[] nextSteps = new int[] {left, right, up, down};
+    int minStep = Integer.MAX_VALUE;
+    for (int i = 0; i < nextSteps.length; i++) {
+      if (nextSteps[i] > 0 && nextSteps[i] < minStep) {
+        minStep = nextSteps[i];
+      }
+    };
     
-    if (right > 0) {
-      steps += right;
-    }
-
-    if (up > 0) {
-      steps += up;
-    }
-    
-    if (down > 0) {
-      steps += down;
-    }
-    
-
-    System.out.println(steps);
+    if (minStep == Integer.MAX_VALUE) return -1;
+    steps += minStep;
     return steps;
   }
 }
