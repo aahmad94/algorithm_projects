@@ -1,7 +1,7 @@
 class Solution(object):
-    
+
     parenthesis = []
-    
+
     def generateParenthesis(self, n):
         """
         :type n: int
@@ -9,7 +9,7 @@ class Solution(object):
         """
         self.recurse(n, 1, 0, '(')
         return self.parenthesis
-    
+
     def recurse(self, n, l, r, str):
         if len(str) == n*2:
             self.parenthesis.append(str)
