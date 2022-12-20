@@ -66,3 +66,44 @@ class Solution2(object):
         r_end.next = self.reorderList(l_nxt) 
 
         return head
+
+# time complexity - O(n)
+# space complexity - O(n)
+class Solution(object):
+    def reorderList(self, head):
+        """
+        :type head: ListNode
+        :rtype: None Do not return anything, modify head in-place instead.
+        """
+        a, b = self.divideList(head)
+        b = self.reverseList(b)
+        return self.mergeList(a, b)
+        
+    
+    def divideList(self, head):
+        slow, fast = head, head
+
+        while(fast and fast.next):
+            slow = slow.next
+            fast = fast.next.next
+        return head, slow
+
+    def reverseList(self, head):
+        prior = None
+        while(head):
+            next_ref = head.next
+            head.next = prior
+            prior = head 
+            head = next_ref 
+        return prior 
+
+    def mergeList(self, a, b):
+        tail = a
+        a = a.next
+        head = tail
+        while(a and b):
+            tail.next = b
+            tail = tail.next
+            b = b.next
+            a, b = b, a
+        return head
