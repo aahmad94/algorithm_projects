@@ -18,7 +18,7 @@ class Solution(object):
             if not pq:
                 d = events[i][0] # first day's starttime 
 
-            # populate pq w/ events that started <= d
+            # populate pq min heap w/ endtime for events that started <= d
             while i < n and events[i][0] <= d: 
                 heapq.heappush(pq, events[i][1])
                 i += 1
